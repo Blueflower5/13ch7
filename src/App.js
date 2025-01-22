@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./styles.css";
 
 const faqs = [
@@ -22,7 +23,50 @@ export default function App() {
     </div>
   );
 }
-
 function Accordion() {
-  return <div>TODO</div>;
+  return (
+    <div className="accordion">
+      {faqs.map((el, i) => (
+        <AccordionItem title={el.title} text={el.text} num={i} key={i} />
+      ))}
+    </div>
+  );
 }
+function AccordionItem({ num, title, text }) {
+  const [isOpen, setIsOpen] = useState(false);
+  function handleToggle() {
+    setIsOpen(!isOpen);
+  }
+  return (
+    <div className={`item ${isOpen ? "open" : ""}`} onClick={handleToggle}>
+      <p className="number">{num}</p>
+      <p className="text">{title}</p>
+      <p className="icon">{isOpen ? "-" : "+"}</p>
+      {isOpen && <div className="content-box">{text}</div>}
+    </div>
+  );
+}
+// function Accordion() {
+//   return (
+//     <div className="accordion">
+//       {faqs.map((question) => (
+//         <Items question={question} key={question.title} />
+//       ))}
+//     </div>
+//   );
+
+//   function Items({ question }) {
+//     const [selectedQ, setSelectedQ] = useState(null);
+//     function handleClick(title) {
+//       setSelectedQ(question.title);
+//     }
+
+//     return (
+//       <div className="item">
+//         <div onClick={() => handleClick(question.title)}>
+//           {question.title === selectedQ ? question.title : question.text}
+//         </div>
+//       </div>
+//     );
+//   }
+// }
